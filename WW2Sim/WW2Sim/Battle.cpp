@@ -283,8 +283,7 @@ Point Battle::printShortestPath(Point source, Point destination)
 
     unordered_map<Point, Point> solution = shortestPath(battleMatrix, source, destination);
 	Point currentPoint = destination;
-	Point safeMove = solution[source];
-
+	Point safeMove = solution[currentPoint];
 	//flip the unordered map, so we can find the shortest safe mpv
 	while (solution[currentPoint].x != source.x || solution[currentPoint].y != source.y)
 	{
@@ -341,27 +340,45 @@ void Battle::clashOfDivisions()
 		this->alterDivisionMatrix(alliesDivisions[i]);
 	}
 
+	this->printGeneralTroopsmatrix();
+
 	this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
 }
 
 void Battle::clashTwoDivisions(Division* division1, Division* division2)
 {
+	
+	
 	Point division1Position = this->getDivisionPosition(division1);
 	Point division2Position = this->getDivisionPosition(division2);
 
 
 	Point shortestPathForDivision1 = this->printShortestPath(division1Position, division2Position);
+	moveDivision(division1Position, shortestPathForDivision1);
 
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	this->printGeneralTroopsmatrix();
+	
 	//check if they do not collide
 	//if collide fight and see which one wins
 	//else update the battle matrix
 
-	Point shortestPathForDivision2 = this->printShortestPath(division2Position, division1Position);
+	Point shortestPathForDivision2 = this->printShortestPath(division2Position, shortestPathForDivision1);
+	moveDivision(division2Position, shortestPathForDivision2);
 
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+	this->printGeneralTroopsmatrix();
 	int a;
 	std::cin >> a;
 	//check if they do not collide
 	//if collide fight and see which one wins
 	//else update the battle matrix
 
+}
+
+void Battle::moveDivision(Point currentPosition, Point nextPosition)
+{
+	Division* divisionToMove = this->divisionMatrix[currentPosition.x][currentPosition.y];
+	this->divisionMatrix[currentPosition.x][currentPosition.y] = nullptr;
+	this->divisionMatrix[nextPosition.x][nextPosition.y] = divisionToMove;
 }

@@ -92,16 +92,8 @@ void GameController::generateWiznaTroops()
     int sizePolishArmyDivisions = polishDivisions.size();
     int sizeWehrmachtArmy = wmDivisions.size();
     
-    for (int i = 0; i < sizeWehrmachtArmy; ++i) {
-        this->battle.alterDivisionMatrix(wmDivisions[i]);
-    }
-    
-    for (int i = 0; i < sizePolishArmyDivisions; ++i) {
-        this->battle.alterDivisionMatrix(polishDivisions[i]);
-    }
-    
     this->battle.printGeneralTroopsmatrix();
-
+	cout << "\n\n";
 	this->battle.clashOfDivisions();
 }
 
