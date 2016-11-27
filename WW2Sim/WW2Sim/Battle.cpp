@@ -256,23 +256,15 @@ void Battle::printShortestPath()
 {
     Point source = Point(0,0);
     Point destination = Point(2, 2);
-    
-    bool battleMatrix [20][20] = {};
-    for (int i = 0; i < 20; ++i)
-    {
-        for (int j = 0; j < 20; ++j)
-        {
-            battleMatrix[i][j] = 1;
-        }
-    }
+   
     
 	bool** currentBattleReplication = matrixReplication(this->divisionMatrix);
-	bool battleM[ROW][COL] = {};
+	bool battleMatrix[ROW][COL] = {};
 	for (int i = 0; i < ROW; ++i)
 	{
 		for (int j = 0; j < COL; ++j)
 		{
-			battleM[i][j] = currentBattleReplication[i][j];
+			battleMatrix[i][j] = currentBattleReplication[i][j];
 		}
 	}
 
@@ -288,3 +280,5 @@ void Battle::printShortestPath()
 	int a;
 	cin >> a;
 }
+
+void clashOfDivisions()
