@@ -3,7 +3,9 @@
 #include <queue>
 #include <stack>
 #include <unordered_map>
-
+#include <time.h>
+#include <stdlib.h>
+#include <windows.h>
 using namespace std;
 
 #define ROW 20
@@ -23,6 +25,11 @@ struct Point
 	}
 	int x;
 	int y;
+
+	bool operator!=(const Point &another)
+	{
+		return (this->x != another.x && this->y != another.y);
+	}
 };
 
 bool** matrixReplication(Division* divisionMatrix[20][20])
@@ -353,23 +360,49 @@ void Battle::clashTwoDivisions(Division* division1, Division* division2)
 	Point division2Position = this->getDivisionPosition(division2);
 
 
-	Point shortestPathForDivision1 = this->printShortestPath(division1Position, division2Position);
-	moveDivision(division1Position, shortestPathForDivision1);
+	bool collisionDetected = 0;
+	system("cls");
 
-	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-	this->printGeneralTroopsmatrix();
-	
-	//check if they do not collide
-	//if collide fight and see which one wins
-	//else update the battle matrix
+	while (!collisionDetected)
+	{
+		Sleep(1500);
+		system("cls");
+		//check if division 1 can move
+		Point shortestPathForDivision1 = this->printShortestPath(division1Position, division2Position);
 
-	Point shortestPathForDivision2 = this->printShortestPath(division2Position, shortestPathForDivision1);
-	moveDivision(division2Position, shortestPathForDivision2);
+		if (shortestPathForDivision1 == division2Position)
+		{
+			collisionDetected = 1;
+			continue;
+		}
 
-	cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-	this->printGeneralTroopsmatrix();
+		//move division 1
+		moveDivision(division1Position, shortestPathForDivision1);
+
+		//change division 1 position
+		division1Position = shortestPathForDivision1;
+
+		//check if division 2 can move
+		Point shortestPathForDivision2 = this->printShortestPath(division2Position, division1Position);
+
+		if (shortestPathForDivision2 == division1Position)
+		{
+			collisionDetected = 1;
+			continue;
+		}
+
+		//move division 2
+		moveDivision(division2Position, shortestPathForDivision2);
+
+		//change division 2 position
+		division2Position = shortestPathForDivision2;
+		
+		cout << "\n\n\n\n\n";
+		this->printGeneralTroopsmatrix();
+	}
+
 	int a;
-	std::cin >> a;
+	cin >> a;
 	//check if they do not collide
 	//if collide fight and see which one wins
 	//else update the battle matrix
