@@ -101,7 +101,8 @@ void GameController::generateWiznaTroops()
     }
     
     this->battle.printGeneralTroopsmatrix();
-    this->battle.printShortestPath();
+
+	this->battle.clashOfDivisions();
 }
 
 void generateStalingradTroops()

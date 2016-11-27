@@ -19,3 +19,8 @@ Army::Army(Sides side, string general, vector<Division*> divisions)
     this->general = general;
     this->divisions = divisions;
 }
+
+vector<Division*> Army::getDivisions() 
+{
+	return this->divisions;
+}

@@ -27,6 +27,11 @@ DivisionLocations Division::getLocation()
 {
     return this->getLocation();
 }
+
+std::string Division::getName() 
+{
+	return this->name;
+}
 //void Division::setDivisionPosition(Battle& battle)
 //{
 //    switch (this->locationOnBattlefield) {

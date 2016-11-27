@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <string>
 #include "Army.hpp"
+
+
+struct Point;
 class Battle
 {
 private:
@@ -19,6 +22,9 @@ public:
     void setGeneralTroopsMatrix();
     void printGeneralTroopsmatrix();
     void alterDivisionMatrix(Division* division);
-    void printShortestPath();
+    Point printShortestPath(Point source, Point destination);
+	void clashOfDivisions();
+	Point getDivisionPosition(Division* division);
+	void clashTwoDivisions(Division* division1, Division* division2);
 };
 #endif /* Battle_hpp */

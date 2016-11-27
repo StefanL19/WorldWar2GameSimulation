@@ -9,6 +9,22 @@ using namespace std;
 #define ROW 20
 #define COL 20
 
+struct Point
+{
+	Point(int x1, int y1)
+	{
+		this->x = x1;
+		this->y = y1;
+	}
+	Point()
+	{
+		this->x = -1;
+		this->y = -1;
+	}
+	int x;
+	int y;
+};
+
 bool** matrixReplication(Division* divisionMatrix[20][20])
 {
 	bool** battleReplication = 0;
@@ -30,22 +46,6 @@ bool** matrixReplication(Division* divisionMatrix[20][20])
 	}
 	return battleReplication;
 }
-
-struct Point
-{
-    Point(int x1, int y1)
-    {
-        this->x = x1;
-        this->y = y1;
-    }
-    Point()
-    {
-        this->x = -1;
-        this->y = -1;
-    }
-    int x;
-    int y;
-};
 
 bool operator==(const Point &firstPoint, const Point &anotherPoint) 
 {
@@ -91,21 +91,38 @@ bool isValid(int row, int col)
 int rowNum[] = {-1, 0, 0, 1};
 int colNum[] = {0, -1, 1, 0};
 
+bool isNotBlocked(bool battleField[ROW][COL], int x, int y, int destX, int destY) 
+{
+	if (x == destX && y == destY)
+		return true;
+
+	else if(battleField[x][y])
+	{
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
 unordered_map<Point, Point> shortestPath(bool battleField[ROW][COL], Point source, Point destination)
 {
     
     
 	unordered_map<Point, Point> previous_point;
-    if (!battleField[source.x][source.y] || !battleField[destination.x][destination.y])
+    /*if (!battleField[source.x][source.y] || !battleField[destination.x][destination.y])
     {
 		return previous_point;
-    }
+    }*/
     
     //matrix of visited elements
     bool visited[ROW][COL];
     //declare all elements in the visited matrix as unvisited
     memset(visited, false, sizeof(visited));
-    
+	visited[source.x][source.y] = true;
+
     // Create a queue for BFS
     queue<queueNode> q;
     
@@ -134,7 +151,7 @@ unordered_map<Point, Point> shortestPath(bool battleField[ROW][COL], Point sourc
             
             // if adjacent cell is valid, has path and
             // not visited yet, enqueue it.
-            if (isValid(row, col) && battleField[row][col] &&
+            if (isValid(row, col) && isNotBlocked(battleField, row, col, destination.x, destination.y) &&
                 !visited[row][col])
             {
 				Point new_point{ row, col };
@@ -252,12 +269,8 @@ void Battle::alterDivisionMatrix(Division* division)
     
 }
 
-void Battle::printShortestPath()
-{
-    Point source = Point(0,0);
-    Point destination = Point(2, 2);
-   
-    
+Point Battle::printShortestPath(Point source, Point destination)
+{   
 	bool** currentBattleReplication = matrixReplication(this->divisionMatrix);
 	bool battleMatrix[ROW][COL] = {};
 	for (int i = 0; i < ROW; ++i)
@@ -270,7 +283,15 @@ void Battle::printShortestPath()
 
     unordered_map<Point, Point> solution = shortestPath(battleMatrix, source, destination);
 	Point currentPoint = destination;
-	while (currentPoint.x != source.x || currentPoint.y != source.y)
+	Point safeMove = solution[source];
+
+	//flip the unordered map, so we can find the shortest safe mpv
+	while (solution[currentPoint].x != source.x || solution[currentPoint].y != source.y)
+	{
+	  currentPoint = solution[currentPoint];
+	}
+	return currentPoint;
+	/*while (currentPoint.x != source.x || currentPoint.y != source.y)
 	{
 		
 		currentPoint = solution[currentPoint];
@@ -278,7 +299,69 @@ void Battle::printShortestPath()
 	}
 
 	int a;
-	cin >> a;
+	cin >> a;*/
 }
 
-void clashOfDivisions()
+Point Battle::getDivisionPosition(Division* division)
+{
+	for (int i = 0; i < ROW; ++i)
+	{
+		for (int j = 0; j < COL; ++j)
+		{
+			if (this->divisionMatrix[i][j] != nullptr)
+			{
+				if (this->divisionMatrix[i][j]->getName() == division->getName())
+				{
+					return Point{ i, j };
+				}
+			}
+		}
+	}
+
+	return Point{ -1, - 1 };
+}
+
+// A function to clash all divisions, it implements a small artificial intelligence
+void Battle::clashOfDivisions() 
+{
+	vector<Division*> alliesDivisions = this->army1->getDivisions();
+	vector<Division*> wmDivisions = this->army2->getDivisions();
+
+	size_t sizeAlliesArmy = alliesDivisions.size();
+	size_t sizeWehrmachtArmy = wmDivisions.size();
+
+
+	for (int i = 0; i < sizeWehrmachtArmy; ++i) 
+	{
+		this->alterDivisionMatrix(wmDivisions[i]);
+	}
+
+	for (int i = 0; i < sizeAlliesArmy; ++i) 
+	{
+		this->alterDivisionMatrix(alliesDivisions[i]);
+	}
+
+	this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
+}
+
+void Battle::clashTwoDivisions(Division* division1, Division* division2)
+{
+	Point division1Position = this->getDivisionPosition(division1);
+	Point division2Position = this->getDivisionPosition(division2);
+
+
+	Point shortestPathForDivision1 = this->printShortestPath(division1Position, division2Position);
+
+	//check if they do not collide
+	//if collide fight and see which one wins
+	//else update the battle matrix
+
+	Point shortestPathForDivision2 = this->printShortestPath(division2Position, division1Position);
+
+	int a;
+	std::cin >> a;
+	//check if they do not collide
+	//if collide fight and see which one wins
+	//else update the battle matrix
+
+}

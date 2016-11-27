@@ -33,6 +33,7 @@ public:
     virtual void attackedBy(TankDivision& opponent);
     ParticipatingCountries getDivisionCountry();
     DivisionLocations getLocation();
+	std::string getName();
     //void setDivisionPosition(Battle &battle);
 };
 #endif /* Division_hpp */
