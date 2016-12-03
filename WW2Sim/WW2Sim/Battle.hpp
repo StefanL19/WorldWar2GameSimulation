@@ -27,5 +27,6 @@ public:
 	Point getDivisionPosition(Division* division);
 	void clashTwoDivisions(Division* division1, Division* division2);
 	void moveDivision(Point currentPosition, Point nextPosition);
+	void collideDivisions(Division* division1, Division* division2);
 };
 #endif /* Battle_hpp */

@@ -1,5 +1,16 @@
-﻿  Battle.cpp
-c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(340): warning C4018: '<': signed/unsigned mismatch
-c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(345): warning C4018: '<': signed/unsigned mismatch
+﻿  WW2Sim.cpp
+  TankDivision.cpp
+  MotorizedDivision.cpp
+  Division.cpp
+  Battle.cpp
+c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(341): warning C4018: '<': signed/unsigned mismatch
+c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(347): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\division.cpp(67): warning C4717: 'Division::getLocation': recursive on all control paths, function will cause runtime stack overflow
+  Compiling...
+  GameController.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Army.cpp
   WW2Sim.vcxproj -> C:\Users\Acer\Documents\dev\AUBG\FDS.Fall.2016\ProjectActual\WW2Sim\Debug\WW2Sim.exe
   WW2Sim.vcxproj -> C:\Users\Acer\Documents\dev\AUBG\FDS.Fall.2016\ProjectActual\WW2Sim\Debug\WW2Sim.pdb (Full PDB)

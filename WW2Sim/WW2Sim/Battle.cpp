@@ -336,14 +336,17 @@ void Battle::clashOfDivisions()
 	size_t sizeAlliesArmy = alliesDivisions.size();
 	size_t sizeWehrmachtArmy = wmDivisions.size();
 
-
+	vector<int> notDefeatedWm;
+	vector<int> notDefeatedAll;
 	for (int i = 0; i < sizeWehrmachtArmy; ++i) 
 	{
+		notDefeatedWm.push_back(i);
 		this->alterDivisionMatrix(wmDivisions[i]);
 	}
 
 	for (int i = 0; i < sizeAlliesArmy; ++i) 
 	{
+		notDefeatedAll.push_back(i);
 		this->alterDivisionMatrix(alliesDivisions[i]);
 	}
 
@@ -401,6 +404,10 @@ void Battle::clashTwoDivisions(Division* division1, Division* division2)
 		this->printGeneralTroopsmatrix();
 	}
 
+	this->collideDivisions(division1, division2);
+	Sleep(1500);
+	system("cls");
+	this->printGeneralTroopsmatrix();
 	int a;
 	cin >> a;
 	//check if they do not collide
@@ -414,4 +421,30 @@ void Battle::moveDivision(Point currentPosition, Point nextPosition)
 	Division* divisionToMove = this->divisionMatrix[currentPosition.x][currentPosition.y];
 	this->divisionMatrix[currentPosition.x][currentPosition.y] = nullptr;
 	this->divisionMatrix[nextPosition.x][nextPosition.y] = divisionToMove;
+}
+
+void Battle::collideDivisions(Division* division1, Division* division2)
+{
+	Point division1Position = this->getDivisionPosition(division1);
+	Point division2Position = this->getDivisionPosition(division2);
+
+	division1->attack(*division2);
+
+	bool isDef1 = division1->getIsDefeated();
+	//bool isDef2 = division2->getIsDefeated();
+
+	if (isDef1)
+	{
+		this->divisionMatrix[division1Position.x][division1Position.y] = nullptr;
+		this->moveDivision(division2Position, division1Position);
+	}
+	else
+	{
+		this->divisionMatrix[division2Position.x][division2Position.y] = nullptr;
+		this->moveDivision(division1Position, division2Position);
+	}
+
+	this->printGeneralTroopsmatrix();
+
+
 }
