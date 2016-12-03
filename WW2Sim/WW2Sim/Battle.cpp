@@ -6,10 +6,14 @@
 #include <time.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <random>
 using namespace std;
 
 #define ROW 20
 #define COL 20
+
+
+typedef unsigned int uint32;
 
 struct Point
 {
@@ -327,6 +331,24 @@ Point Battle::getDivisionPosition(Division* division)
 	return Point{ -1, - 1 };
 }
 
+void removeDefeatedDivision(vector<int>& wmNotDefeated, vector<int>& alliesNotDefeated, vector<Division*> alliesDivisions, vector<Division*> wmDivisions)
+{
+	for (size_t i = 0; i < alliesDivisions.size(); i++)
+	{
+		if (alliesDivisions[i]->getIsDefeated() == true)
+		{
+			alliesNotDefeated.erase(std::remove(alliesNotDefeated.begin(), alliesNotDefeated.end(), i), alliesNotDefeated.end());
+		}
+	}
+	for (size_t i = 0; i < wmDivisions.size(); i++)
+	{
+		if (wmDivisions[i]->getIsDefeated() == true)
+		{
+			wmNotDefeated.erase(std::remove(wmNotDefeated.begin(), wmNotDefeated.end(), i), wmNotDefeated.end());
+		}
+	}
+}
+
 // A function to clash all divisions, it implements a small artificial intelligence
 void Battle::clashOfDivisions() 
 {
@@ -350,9 +372,33 @@ void Battle::clashOfDivisions()
 		this->alterDivisionMatrix(alliesDivisions[i]);
 	}
 
+	int randWm = 0 + (rand() % (int)(notDefeatedWm.size() - 1 - 0 + 1));
+	int randAllies = 0 + (rand() % (int)(notDefeatedAll.size() - 1 - 0 + 1));
+	//random_device random_device;
+	//mt19937 engine{ random_device() };
+	//std::uniform_int_distribution<int> distWm(0, notDefeatedWm.size() - 1);
+	//std::uniform_int_distribution<int> distAllies(0, notDefeatedAll.size() - 1);
+
+	while (notDefeatedAll.size() != 0 && notDefeatedWm.size() != 0)
+	{
+		int wmDivisionToCollide = notDefeatedWm[randWm];
+		int alliesDivisionToCollide = notDefeatedAll[randAllies];
+		this->clashTwoDivisions(alliesDivisions[alliesDivisionToCollide], wmDivisions[wmDivisionToCollide]);
+
+		removeDefeatedDivision(notDefeatedWm, notDefeatedAll, alliesDivisions, wmDivisions);
+
+		if ((notDefeatedWm.size() == 0) || (notDefeatedAll.size() == 0))
+		{
+			continue;
+		}
+
+		randWm = 0 + (rand() % (int)(notDefeatedWm.size() - 1 - 0 + 1));
+		randAllies = 0 + (rand() % (int)(notDefeatedAll.size() - 1 - 0 + 1));
+	}
+
 	this->printGeneralTroopsmatrix();
 
-	this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
+	//this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
 }
 
 void Battle::clashTwoDivisions(Division* division1, Division* division2)
@@ -408,8 +454,8 @@ void Battle::clashTwoDivisions(Division* division1, Division* division2)
 	Sleep(1500);
 	system("cls");
 	this->printGeneralTroopsmatrix();
-	int a;
-	cin >> a;
+	//int a;
+	//cin >> a;
 	//check if they do not collide
 	//if collide fight and see which one wins
 	//else update the battle matrix
