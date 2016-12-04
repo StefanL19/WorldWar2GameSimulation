@@ -66,7 +66,7 @@ DivisionLocations Division::getLocation()
     return this->getLocation();
 }
 
-std::string Division::getName() 
+string Division::getName() 
 {
 	return this->name;
 }
@@ -74,6 +74,11 @@ std::string Division::getName()
 int Division::getNumberOfSoldiers()
 {
 	return this->numberOfSoldiers;
+}
+
+string Division::getCommander()
+{
+	return this->commander;
 }
 //void Division::setDivisionPosition(Battle& battle)
 //{

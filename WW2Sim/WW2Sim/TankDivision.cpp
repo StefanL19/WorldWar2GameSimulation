@@ -9,7 +9,7 @@ TankDivision::TankDivision(string name, string commander, ParticipatingCountries
 
 void TankDivision::attack(Division &opponent)
 {
-	this->attack(opponent);
+	this->attackedBy(opponent);
 	opponent.attackedBy(*this);
 }
 

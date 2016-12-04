@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <random>
+#include <fstream>
 using namespace std;
 
 #define ROW 20
@@ -14,6 +15,17 @@ using namespace std;
 
 
 typedef unsigned int uint32;
+
+void readAsciiTextFile(string path)
+{
+	ifstream infile(path);
+	string line;
+
+	while (getline(infile, line))
+	{
+		cout << line << endl;
+	}
+}
 
 struct Point
 {
@@ -190,6 +202,8 @@ bool checkIfAllies(ParticipatingCountries country)
             break;
         case ParticipatingCountries::Japan:
             return 0;
+		case ParticipatingCountries::Italy:
+			return 0;
         default:
             return 1;
             break;
@@ -396,6 +410,16 @@ void Battle::clashOfDivisions()
 		randAllies = 0 + (rand() % (int)(notDefeatedAll.size() - 1 - 0 + 1));
 	}
 
+	system("cls");
+	if (notDefeatedAll.size() == 0)
+	{
+		cout << " \n The Wehrmacht won the battle!!! \n";
+	}
+	else
+	{
+		cout << " \n Allies won the battle!!! \n";
+	}
+
 	this->printGeneralTroopsmatrix();
 
 	//this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
@@ -451,14 +475,7 @@ void Battle::clashTwoDivisions(Division* division1, Division* division2)
 	}
 
 	this->collideDivisions(division1, division2);
-	Sleep(1500);
-	system("cls");
-	this->printGeneralTroopsmatrix();
-	//int a;
-	//cin >> a;
-	//check if they do not collide
-	//if collide fight and see which one wins
-	//else update the battle matrix
+	Sleep(1500);	
 
 }
 
@@ -473,6 +490,14 @@ void Battle::collideDivisions(Division* division1, Division* division2)
 {
 	Point division1Position = this->getDivisionPosition(division1);
 	Point division2Position = this->getDivisionPosition(division2);
+
+	cout << "Battle started: \n";
+	cout << division1->getName() << " with commander " << division1->getCommander() << "\n";
+	cout << "Against " << division2->getName() << " with commander " << division2->getCommander() << "\n";
+
+	//simulate battle activity
+	readAsciiTextFile("Soldiers.txt");
+	Sleep(10500);
 
 	division1->attack(*division2);
 

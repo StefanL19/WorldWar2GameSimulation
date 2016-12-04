@@ -18,5 +18,6 @@ public:
     void listBattleStory();
     void generateBattleTroops();
     void generateWiznaTroops();
+	void generateStalingradTroops();
 };
 #endif /* GameController_hpp */

@@ -71,10 +71,10 @@ void GameController::generateWiznaTroops()
     Army polishArmy = Army(Sides::Allies, "Raginis", polishDivisions);
     
     Division wmDivision1 = Division("3rd Army", "von Kuechler", ParticipatingCountries::Germany,  20000);
-    Division wmDivision2 = TankDivision("XIX Panzer Corps", "Guderian", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
-    Division wmDivision3 = TankDivision("3rd Panzer Division", "Stumpff", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
-    Division wmDivision4 = TankDivision("10th Panzer Division", "Falkenhorst", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
-    Division wmDivision5 = MotorizedDivision("20th Motorised Division", "von Wiktorin", ParticipatingCountries::Germany,  2000, 500, 500);
+	TankDivision wmDivision2 = TankDivision("XIX Panzer Corps", "Guderian", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
+	TankDivision wmDivision3 = TankDivision("3rd Panzer Division", "Stumpff", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
+	TankDivision wmDivision4 = TankDivision("10th Panzer Division", "Falkenhorst", ParticipatingCountries::Germany,  50000, 300, 10000, 500);
+	MotorizedDivision wmDivision5 = MotorizedDivision("20th Motorised Division", "von Wiktorin", ParticipatingCountries::Germany,  2000, 500, 500);
     Division wmDivision6 = Division("Lötzen Fortress Brigade", "Offenbacher", ParticipatingCountries::Germany, 5000);
     vector<Division*> wmDivisions;
     
@@ -97,9 +97,43 @@ void GameController::generateWiznaTroops()
 	this->battle.clashOfDivisions();
 }
 
-void generateStalingradTroops()
+void GameController::generateStalingradTroops()
 {
-    
+	vector<Division *> sovietDivisions;
+	vector<Division *> wmDivisions;
+
+	Division sovietDivision1 = Division("28th Army", "Vladimir Kachalov", ParticipatingCountries::USSR, 100000);
+	Division sovietDivision2 = Division("51st Army", "Fyodor Kuznetsov", ParticipatingCountries::USSR, 300000);
+	MotorizedDivision sovietDivision3 = MotorizedDivision("57th Army", "Andrey Vlasov", ParticipatingCountries::USSR, 100000, 2000, 2000);
+	TankDivision sovietDivision4 = TankDivision("62nd Order of Lenin Army", "Vasily Chuikov", ParticipatingCountries::USSR, 200000, 300, 7500, 500);
+	TankDivision sovietDivision5 = TankDivision("7th Guards Army", "Georgy Zhukov", ParticipatingCountries::USSR, 400000, 300, 2500, 500);
+	
+	TankDivision wmDivision1 = TankDivision("6th Army", "Friedrich Paulus", ParticipatingCountries::Germany, 400000, 300, 500, 200);
+	TankDivision wmDivision2 = TankDivision("4th Panzer Army", "Friedrich Paulus", ParticipatingCountries::Germany, 100000, 100, 500, 300);
+	Division wmDivision3 = Division("Armata Italiana in Russia", "Italo Gariboldi", ParticipatingCountries::Italy, 300000);
+	sovietDivisions.push_back(&sovietDivision1);
+	sovietDivisions.push_back(&sovietDivision2);
+	sovietDivisions.push_back(&sovietDivision3);
+	sovietDivisions.push_back(&sovietDivision4);
+	sovietDivisions.push_back(&sovietDivision5);
+
+	wmDivisions.push_back(&wmDivision1);
+	wmDivisions.push_back(&wmDivision2);
+	wmDivisions.push_back(&wmDivision3);
+
+	Army sovietArmy = Army(Sides::Allies, "Zhukov", sovietDivisions);
+	Army wmArmy = Army(Sides::Axis, "Paulus", wmDivisions);
+
+	Battle currentBattle = Battle("Battle of Stalingrad", sovietArmy, wmArmy);
+	this->battle = currentBattle;
+	
+	this->battle.printGeneralTroopsmatrix();
+	cout << "\n\n";
+	this->battle.clashOfDivisions();
+
+	//Armata Italiana in Russia
+	//4th Panzer Army
+
 }
 
 void generateKurskTroops()

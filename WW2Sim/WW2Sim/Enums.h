@@ -8,7 +8,7 @@ enum Sides { Axis, Allies };
 
 enum class DivisionLocations { Defense, Middle, Attack};
 
-enum class ParticipatingCountries { Germany, USSR, USA, Poland, Japan, UK, France };
+enum class ParticipatingCountries { Germany, USSR, USA, Poland, Japan, UK, France, Italy };
 
 enum Battles { Wizna, Stalingrad, Kursk };
 

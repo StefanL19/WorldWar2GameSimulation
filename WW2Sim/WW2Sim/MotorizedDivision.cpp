@@ -13,7 +13,7 @@ MotorizedDivision::MotorizedDivision(string name, string commander, Participatin
 
 void MotorizedDivision::attack(Division &opponent)
 {
-	this->attack(opponent);
+	this->attackedBy(opponent);
 	opponent.attackedBy(*this);
 }
 void MotorizedDivision::attackedBy(Division& opponent)

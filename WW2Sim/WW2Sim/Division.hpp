@@ -27,6 +27,7 @@ public:
     Division(std::string name, std::string commander, ParticipatingCountries country, int numberOfSoldiers);
     virtual void attack(Division& opponent);
     bool getIsDefeated();
+	std::string getCommander();
     void setIsDefeated(bool isDefeated);
     virtual void attackedBy(Division& opponent);
     virtual void attackedBy(MotorizedDivision& opponent);

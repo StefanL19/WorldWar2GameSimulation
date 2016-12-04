@@ -1,5 +1,3 @@
-﻿  Battle.cpp
-c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(363): warning C4018: '<': signed/unsigned mismatch
-c:\users\acer\documents\dev\aubg\fds.fall.2016\projectactual\ww2sim\ww2sim\battle.cpp(369): warning C4018: '<': signed/unsigned mismatch
+﻿  GameController.cpp
   WW2Sim.vcxproj -> C:\Users\Acer\Documents\dev\AUBG\FDS.Fall.2016\ProjectActual\WW2Sim\Debug\WW2Sim.exe
   WW2Sim.vcxproj -> C:\Users\Acer\Documents\dev\AUBG\FDS.Fall.2016\ProjectActual\WW2Sim\Debug\WW2Sim.pdb (Full PDB)
