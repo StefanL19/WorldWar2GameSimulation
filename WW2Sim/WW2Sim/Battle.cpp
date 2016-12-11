@@ -218,6 +218,13 @@ Battle::Battle(string battleName, Army& army1, Army& army2)
     this->army2 = &army2;
 }
 
+Battle::Battle(string battleName, Army& army1, Army& army2, int strategy)
+{
+	this->battleName = battleName;
+	this->army1 = &army1;
+	this->army2 = &army2;
+	this->battleStrategy = strategy;
+}
 
 void Battle::printGeneralTroopsmatrix()
 {
@@ -228,7 +235,7 @@ void Battle::printGeneralTroopsmatrix()
         {
             if (this->divisionMatrix[row][col] == nullptr)
             {
-                cout << "///" << " | ";
+				cout << "   " << " | ";
                 continue;
             }
             else
@@ -363,7 +370,7 @@ void removeDefeatedDivision(vector<int>& wmNotDefeated, vector<int>& alliesNotDe
 	}
 }
 
-// A function to clash all divisions, it implements a small artificial intelligence
+// A function to clash all divisions
 void Battle::clashOfDivisions() 
 {
 	vector<Division*> alliesDivisions = this->army1->getDivisions();
@@ -392,11 +399,32 @@ void Battle::clashOfDivisions()
 	//mt19937 engine{ random_device() };
 	//std::uniform_int_distribution<int> distWm(0, notDefeatedWm.size() - 1);
 	//std::uniform_int_distribution<int> distAllies(0, notDefeatedAll.size() - 1);
+	int stepCounter = 0;
 
 	while (notDefeatedAll.size() != 0 && notDefeatedWm.size() != 0)
 	{
 		int wmDivisionToCollide = notDefeatedWm[randWm];
 		int alliesDivisionToCollide = notDefeatedAll[randAllies];
+
+		if (stepCounter == 0)
+		{
+			switch (this->battleStrategy)
+			{
+			case 0:
+				break;
+			case 1:
+				wmDivisionToCollide = notDefeatedWm.size() / 2;
+				break;
+			case 2:
+				wmDivisionToCollide = 0;
+				break;
+			case 3:
+				wmDivisionToCollide = notDefeatedWm.size() - 1;
+			default:
+				break;
+			}
+		}
+		
 		this->clashTwoDivisions(alliesDivisions[alliesDivisionToCollide], wmDivisions[wmDivisionToCollide]);
 
 		removeDefeatedDivision(notDefeatedWm, notDefeatedAll, alliesDivisions, wmDivisions);
@@ -408,6 +436,7 @@ void Battle::clashOfDivisions()
 
 		randWm = 0 + (rand() % (int)(notDefeatedWm.size() - 1 - 0 + 1));
 		randAllies = 0 + (rand() % (int)(notDefeatedAll.size() - 1 - 0 + 1));
+		++stepCounter;
 	}
 
 	system("cls");
@@ -421,7 +450,7 @@ void Battle::clashOfDivisions()
 	}
 
 	this->printGeneralTroopsmatrix();
-
+	
 	//this->clashTwoDivisions(alliesDivisions[0], wmDivisions[0]);
 }
 

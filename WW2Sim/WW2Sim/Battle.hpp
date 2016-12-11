@@ -15,9 +15,11 @@ private:
     Army* army1;
     Army* army2;
     Division* divisionMatrix[20][20] = {};
+	int battleStrategy;
 public:
     Battle();
     Battle(std::string battleName, Army& army1, Army& army2);
+	Battle(std::string battleName, Army& army1, Army& army2, int strategy);
     std::string getBattleName();
     void setGeneralTroopsMatrix();
     void printGeneralTroopsmatrix();
