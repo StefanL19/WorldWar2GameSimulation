@@ -80,14 +80,3 @@ string Division::getCommander()
 {
 	return this->commander;
 }
-//void Division::setDivisionPosition(Battle& battle)
-//{
-//    switch (this->locationOnBattlefield) {
-//        case <#constant#>:
-//            <#statements#>
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}

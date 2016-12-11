@@ -47,9 +47,6 @@ void GameController::listBattleStory()
         case Stalingrad:
             readTextFile("BattleOfStalingradStory.txt");
             break;
-        case Kursk:
-            readTextFile("BattleOfKurskStory.txt");
-            break;
         default:
             break;
     }
@@ -136,11 +133,6 @@ void GameController::generateStalingradTroops()
 
 }
 
-void generateKurskTroops()
-{
-    
-}
-
 void GameController::generateBattleTroops()
 {
     switch (this->battleChoice) {
@@ -149,9 +141,6 @@ void GameController::generateBattleTroops()
             break;
         case Stalingrad:
             generateStalingradTroops();
-            break;
-        case Kursk:
-            generateKurskTroops();
             break;
         default:
             break;
