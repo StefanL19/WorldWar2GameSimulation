@@ -20,7 +20,7 @@ void readTextFile(string path)
 void GameController::chooseBattle()
 {
     int battleChoise;
-    cout << "Please, choose a battle: \n Possibilities: \n 1. Battle of Wizna \n 2. Battle of Stalingrad \n 3. Battle of Kursk \n";
+    cout << "Please, choose a battle: \n Possibilities: \n 1. Battle of Wizna \n 2. Battle of Stalingrad \n";
     cin >> battleChoise;
     switch (battleChoise) {
         case 1:
@@ -28,9 +28,6 @@ void GameController::chooseBattle()
             break;
         case 2:
             this->battleChoice = Stalingrad;
-            break;
-        case 3:
-            this->battleChoice = Kursk;
             break;
         default:
             break;
@@ -180,41 +177,71 @@ void GameController::generateBattleTroops()
     }
 }
 
-/* Function to sort an array using insertion sort*/
-void insertionSortAndList(vector<Division *> divisions, int n)
+int partition(vector< Division* >& divisions, const int left, const int right)
 {
-	Division* key;
-	int i, j;
-	for (i = 1; i < n; i++)
-	{
-		key = divisions[i];
-		j = i - 1;
+	const int mid = left + (right - left) / 2;
 
-		/* Move elements of arr[0..i-1], that are
-		greater than key, to one position ahead
-		of their current position */
-		while (j >= 0 && divisions[j]->getDivisionPower() > key->getDivisionPower())
+	const int pivot = divisions[mid]->getDivisionPower();
+
+	std::swap(divisions[mid], divisions[left]);
+
+	int i = left + 1;
+
+	int j = right;
+
+	while (i <= j) {
+		while (i <= j && divisions[i]->getDivisionPower() <= pivot)
 		{
-			//make one comparison at each step
-			divisions[j + 1] = divisions[j];
-			j = j - 1;
+			i++;
 		}
-		divisions[j + 1] = key;
+
+		while (i <= j && divisions[j]->getDivisionPower() > pivot)
+		{
+			j--;
+		}
+
+		if (i < j) {
+			std::swap(divisions[i], divisions[j]);
+		}
 	}
+	std::swap(divisions[i - 1], divisions[left]);
+	return i - 1;
+}
+
+void quickSort(vector<Division *>& divisions, const int left, const int right)
+{
+	if (left >= right)
+	{
+		return;
+	}
+
+	int part = partition(divisions, left, right);
+
+	quickSort(divisions, left, part - 1);
+	quickSort(divisions, part + 1, right);
+}
+
+/* Function to sort an array using quick sort*/
+void quickSortAndList(vector<Division *> divisions, int n)
+{
+	vector<Division *> copyToSort(divisions);
+
+	quickSort(copyToSort, 0, copyToSort.size() - 1);
 
 	for (size_t i = 0; i < n; i++)
 	{
-		cout << "Name: " << divisions[i]->getName() << " Power: " << divisions[i]->getDivisionPower() << "\n";
+		cout << "Name: " << copyToSort[i]->getName() << " Power: " << copyToSort[i]->getDivisionPower() << "\n";
 	}
 }
 
 void GameController::listDivisionsByPower(vector<Division *> alliesDivisions, vector<Division *> wehrmachtDivisions)
 {
 	cout << " \n Allies divisions: \n";
-	insertionSortAndList(alliesDivisions, alliesDivisions.size());
+	quickSortAndList(alliesDivisions, alliesDivisions.size());
 	cout << " \n Wehrmacht divisions: \n";
-	insertionSortAndList(wehrmachtDivisions, wehrmachtDivisions.size());
+	quickSortAndList(wehrmachtDivisions, wehrmachtDivisions.size());
 }
+
 
 
 

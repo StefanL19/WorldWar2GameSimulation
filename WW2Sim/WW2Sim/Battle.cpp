@@ -131,9 +131,7 @@ bool isNotBlocked(bool battleField[ROW][COL], int x, int y, int destX, int destY
 }
 
 unordered_map<Point, Point> shortestPath(bool battleField[ROW][COL], Point source, Point destination)
-{
-    
-    
+{    
 	unordered_map<Point, Point> previous_point;
     /*if (!battleField[source.x][source.y] || !battleField[destination.x][destination.y])
     {
