@@ -20,19 +20,23 @@ private:
     std::string commander;
     ParticipatingCountries country;
     int numberOfSoldiers;
-    bool isDefeated;
+	bool isDefeated;
     int currentRow;
     int currentCol;
 public:
     Division(std::string name, std::string commander, ParticipatingCountries country, int numberOfSoldiers);
     virtual void attack(Division& opponent);
     bool getIsDefeated();
+	std::string getCommander();
     void setIsDefeated(bool isDefeated);
     virtual void attackedBy(Division& opponent);
     virtual void attackedBy(MotorizedDivision& opponent);
-    virtual void attackedBy(TankDivision& opponent);
+	virtual void attackedBy(TankDivision& opponent); 
+	virtual double getDivisionPower();
     ParticipatingCountries getDivisionCountry();
     DivisionLocations getLocation();
+	std::string getName();
+	int getNumberOfSoldiers();
     //void setDivisionPosition(Battle &battle);
 };
 #endif /* Division_hpp */

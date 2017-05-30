@@ -22,6 +22,9 @@ public:
     void attackedBy(Division& opponent) override;
     void attackedBy(MotorizedDivision &opponent) override;
     void attackedBy(TankDivision& opponent) override;
+	double getDivisionPower() override;
+	int getNumberOfCars();
+	int getNumberOfMotors();
     
 };
 #endif /* MotorizedDivision_hpp */

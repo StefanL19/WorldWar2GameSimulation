@@ -7,6 +7,7 @@
 #include "Army.hpp"
 #include "TankDivision.hpp"
 #include "Battle.hpp"
+#include <vector>
 class GameController
 {
 private:
@@ -18,5 +19,7 @@ public:
     void listBattleStory();
     void generateBattleTroops();
     void generateWiznaTroops();
+	void generateStalingradTroops();
+	void listDivisionsByPower(std::vector<Division *> alliesDivisions, std::vector<Division *> wehrmachtDivisions);
 };
 #endif /* GameController_hpp */

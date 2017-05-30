@@ -1,0 +1,7 @@
+Number of soldiers  = weight 1.7
+Number of Cars = weight 2.1
+Number of Motors = weight 1.9
+Number of Tanks = weight 4.0
+
+
+

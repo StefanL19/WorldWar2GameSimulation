@@ -22,6 +22,7 @@ public:
     
     Army(Sides side, string general, vector<Division*> divisions);
     
+	vector<Division*> getDivisions();
     //Think about add division method
     
 };
